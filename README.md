@@ -26,7 +26,7 @@ Run this app locally by:
 ```
 python dashboard.py
 ```
-Open http://0.0.0.0:8058/ in your browser, and you will see the dashboard.
+Open http://localhost:8058/ in your browser, and you will see the dashboard.
 
 
 ## What does this dashboard show

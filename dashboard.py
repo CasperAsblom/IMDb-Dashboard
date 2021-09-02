@@ -505,7 +505,7 @@ def generate_favorite_pcomps():
 ############### LAYOUT
 
 
-app.layout = dbc.Container(style={'background-image':'url(https://images.squarespace-cdn.com/content/v1/5a7b6485be42d67e9c852f09/1518285038853-DH7MTETF6IG40CIDXGSQ/data.jpg?format=2500w)', 'height':'100vh', 'width':'100vw'}, children = [dbc.Container(style={'backgroundColor': colors['background'], 'color': colors['text'], 'fontFamily': "Open Sans", 'opacity':0.95, 'height':'100vh', 'width':'100vw', 'margin-left':-15, 'margin-right':15}, children=
+app.layout = dbc.Container(style={'background-image':'url(https://images.squarespace-cdn.com/content/v1/5a7b6485be42d67e9c852f09/1518285038853-DH7MTETF6IG40CIDXGSQ/data.jpg?format=2500w)', 'height':'100vh', 'width':'100vw'}, children = [dbc.Container(style={'backgroundColor': colors['background'], 'color': colors['text'], 'fontFamily': "Open Sans; sans-serif", 'opacity':0.95, 'height':'100vh', 'width':'100vw', 'margin-left':-15, 'margin-right':15}, children=
     [
         dbc.Row(dbc.Col(html.H1('IMDb Data Analysis Dashboard', className='text-center text-primary, mb-3'), style={'backgroundColor': colors['dark-blue'], 'padding-top':20, 'padding-bottom':20})),  # header row
 

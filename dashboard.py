@@ -30,12 +30,12 @@ pd.options.mode.chained_assignment = None # suppress SettingWithCopyWarning
 
 ############### IMPORTING DATA
 
-ratings = pd.read_excel(r'new_ratings.xlsx', engine='openpyxl')
+ratings = pd.read_excel(r'.\\data\\new_ratings.xlsx', engine='openpyxl')
 ratings.drop(ratings.columns[ratings.columns.str.contains('unnamed',case = False)],axis = 1, inplace = True) # drop unnamed columns
 
 # Merge data with IMDb extensive dataset (Available at: https://www.kaggle.com/stefanoleone992/imdb-extensive-dataset?select=IMDb+movies.csv)
 
-extended_ratings = pd.read_excel(r'IMDb-movies.xlsx', engine='openpyxl')
+extended_ratings = pd.read_excel(r'.\\data\\IMDb-movies.xlsx', engine='openpyxl')
 new_ratings = pd.merge(ratings, extended_ratings,  how='left', left_on=['Title','Year'], right_on = ['original_title','year'])
 new_ratings.drop(['metascore', 'language'], axis=1, inplace=True)
 new_ratings.dropna(inplace=True) # drop rows with at least 1 NaN
@@ -55,7 +55,8 @@ colors = {
 # Colorscales
 
 PuYl = ["#9B51E0","#AD6BC3","#BF85A5","#D0A088","#F4D44D"]
-PuYl23 = ["#9B51E0","#9F57D9","#A35DD3","#A763CC","#AB69C5","#AF6FBF","#B375B8","#B77BB1","#BB81AB","#BF87A4","#C38D9D","#C89397","#CC9890","#D09E89","#D4A482","#D8AA7C","#DCB075","#E0B66E","#E4BC68","#E8C261","#ECC85A","#F0CE54","#F4D44D"]
+PuYl23 = ["#9B51E0","#9F57D9","#A35DD3","#A763CC","#AB69C5","#AF6FBF","#B375B8","#B77BB1","#BB81AB","#BF87A4","#C38D9D","#C89397", \
+            "#CC9890","#D09E89","#D4A482","#D8AA7C","#DCB075","#E0B66E","#E4BC68","#E8C261","#ECC85A","#F0CE54","#F4D44D"]
 PuYl12 = ["#9B51E0","#A35DD3","#AB69C5","#B375B8","#BB81AB","#C38D9D","#CC9890","#D4A482","#DCB075","#E4BC68","#ECC85A","#F4D44D"]
 
 ############### DATA FOR GRAPHS
@@ -184,7 +185,6 @@ def generate_decades_avg_rating_graph():
             x=sorted_avg_decade_ratings["Decade"],
             y=sorted_avg_decade_ratings["Average rating"],
             mode="markers",
-            #line=dict(color="black"),
             error_y=dict(
                 type='data',
                 symmetric=True,
@@ -196,7 +196,6 @@ def generate_decades_avg_rating_graph():
         margin=dict(t=10, l=0),
         font=dict(
             size=13,
-            color="black"
         ),
         paper_bgcolor=colors['background'],
         font_color=colors['text'])
@@ -242,7 +241,7 @@ def generate_genres_avg_rating_graph():
     unique_genres = []
 
     for x,y in genre_counts.items():
-        if y>10: # only includes genres with at least 10 watched movies
+        if y>=10: # only includes genres with at least 10 watched movies
             unique_genres.append(x)
         
         
@@ -276,8 +275,7 @@ def generate_genres_avg_rating_graph():
         margin=dict(t=10, l=0),
         yaxis_title="Average rating",
         font=dict(
-            size=13,
-            color="black"
+            size=13
         ),
         paper_bgcolor=colors['background'],
         font_color=colors['text'])
@@ -326,7 +324,7 @@ def generate_favorite_directors():
     avg_ratings = []
 
     for x,y in counts.items():
-        if y >= 5: # TODO: find a good metric here... some great directors are excluded due to >=5 movies exclusion
+        if y >= 5: # only include directors with at least 5 watched movies
             top_directors.append(x)
 
     for director in top_directors:
@@ -347,7 +345,7 @@ def generate_favorite_directors():
     favorite_directors_graph.update_layout(
         xaxis_title="Average rating",
         margin=dict(t=30, r=0),
-        font=dict(size=13, color='black'),
+        font=dict(size=13),
         plot_bgcolor=colors['background'],
         paper_bgcolor=colors['background'],
         font_color=colors['text'])
@@ -373,7 +371,7 @@ def generate_favorite_actors():
     avg_ratings = []
 
     for x,y in counts.items():
-        if y >= 10: # TODO: find a good metric here... some great actors are excluded due to >=10 movies exclusion
+        if y >= 10: # only include actors with at least 10 watched movies
             top_actors.append(x)
 
     for actor in top_actors:
@@ -394,7 +392,7 @@ def generate_favorite_actors():
     favorite_actors_graph.update_layout(
         xaxis_title="Average rating",
         margin=dict(t=30, r=0),
-        font=dict(size=13, color='black'),
+        font=dict(size=13),
         plot_bgcolor=colors['background'],
         paper_bgcolor=colors['background'],
         font_color=colors['text'])
@@ -420,7 +418,7 @@ def generate_favorite_writers():
     avg_ratings = []
 
     for x,y in counts.items():
-        if y >= 5: # TODO: find a good metric here... some great writers are excluded due to >=5 movies exclusion
+        if y >= 5: # only include writers with at least 5 watched movies
             top_writers.append(x)
 
     for writer in top_writers:
@@ -441,7 +439,7 @@ def generate_favorite_writers():
     favorite_writers_graph.update_layout(
         xaxis_title="Average rating",
         margin=dict(t=30,r=0),
-        font=dict(size=13, color='black'),
+        font=dict(size=13),
         plot_bgcolor=colors['background'],
         paper_bgcolor=colors['background'],
         font_color=colors['text'])
@@ -465,7 +463,7 @@ def generate_favorite_pcomps():
     avg_ratings = []
 
     for x,y in counts.items():
-        if y >= 15: # TODO: find a good metric here... some great pcomps are excluded due to >=15 movies exclusion
+        if y >= 15: # only include production companies with at least 15 watched movies
             top_pcomps.append(x)
             
 
@@ -488,7 +486,7 @@ def generate_favorite_pcomps():
     favorite_pcomps_graph.update_layout(
         xaxis_title="Average rating",
         margin=dict(t=30,r=0),
-        font=dict(size=13, color='black'),
+        font=dict(size=13),
         plot_bgcolor=colors['background'],
         paper_bgcolor=colors['background'],
         font_color=colors['text'])
@@ -547,30 +545,10 @@ app.layout = dbc.Container(style={'background-image':'url(https://images.squares
 
         dbc.Row([  # start of third row
             dbc.Col([  # first column on third row
-                html.H4('Decades ordered by average rating', className='text-center', style={'position':'relative'}),
-
-                html.Div([
-                    html.Span(
-                    "?",
-                    id="tooltip-target",
-                    style={
-                            "textAlign": "center", 
-                            "color": "white",
-                            "height":25,
-                            "width":25,
-                            "background-color":"#bbb",
-                            "border-radius":"50%",
-                            "display":"inline-block",
-                            "position":"absolute",
-                            "top":0,
-                            "left":"70%"
-                    }, className="dot"),
-
-                    dbc.Tooltip(
-                        "Only includes decades with at least 10 watched movies",
-                        target="tooltip-target",
-                )]),                    
-
+                html.H4('Decades ordered by average rating', className='text-center', id="tooltip-target"),
+                dbc.Tooltip(
+                    "Only includes decades with at least 10 watched movies",
+                    target="tooltip-target"),                    
                 dcc.Graph(id='decades-average-rating-graph',
                       figure = generate_decades_avg_rating_graph(),
                       style={'height':380},
@@ -587,29 +565,10 @@ app.layout = dbc.Container(style={'background-image':'url(https://images.squares
         
         dbc.Row([  # start of fourth row
             dbc.Col([  # first column on fourth row
-                html.H4('Genres ordered by average rating', className='text-center', style={'position':'relative'}),
-                html.Div([
-                    html.Span(
-                    "?",
-                    id="tooltip-target2",
-                    style={
-                            "textAlign": "center", 
-                            "color": "white",
-                            "height":25,
-                            "width":25,
-                            "background-color":"#bbb",
-                            "border-radius":"50%",
-                            "display":"inline-block",
-                            "position":"absolute",
-                            "top":0,
-                            "left":"70%"
-                    }, className="dot"),
-
-                    dbc.Tooltip(
-                        "Only includes genres with at least 10 watched movies",
-                        target="tooltip-target2",
-                )]),                    
-
+                html.H4('Genres ordered by average rating', className='text-center', id="tooltip-target2"),
+                dbc.Tooltip(
+                    "Only includes genres with at least 10 watched movies",
+                    target="tooltip-target2"),                    
                 dcc.Graph(id='genre-average-rating-graph',
                       figure=generate_genres_avg_rating_graph(),
                       style={'height':380},
@@ -626,28 +585,40 @@ app.layout = dbc.Container(style={'background-image':'url(https://images.squares
 
         dbc.Row([  # start of fifth row
             dbc.Col([  # first column on fifth row
-                html.H4('Favorite directors', className='text-center'),
+                html.H4('Favorite directors', className='text-center', id='tooltip-target3'),
+                dbc.Tooltip(
+                    "Only includes directors with at least 5 watched movies",
+                    target="tooltip-target3"),                  
                 dcc.Graph(id='favorite-directors-graph',
                       figure=generate_favorite_directors(),
                       style={'height':380},
-                      config= {'displaylogo': False}),
+                      config= {'displaylogo': False}),                 
             ], width={'size': 3, 'offset': 0, 'order': 1}),  # width first column on fifth row
             dbc.Col([  # second column on fifth row
-                html.H4('Favorite actors', className='text-center'),
+                html.H4('Favorite actors', className='text-center', id='tooltip-target4'),
+                dbc.Tooltip(
+                    "Only includes actors with at least 10 watched movies",
+                    target="tooltip-target4"),                   
                 dcc.Graph(id='favorite-actors-graph',
                       figure = generate_favorite_actors(),
                       style={'height':380},
                       config= {'displaylogo': False}),
             ], width={'size': 3, 'offset': 0, 'order': 2}),  # width second column on fifth row
             dbc.Col([  # third column on fifth row
-                html.H4('Favorite writers', className='text-center'),
+                html.H4('Favorite writers', className='text-center', id='tooltip-target5'),
+                dbc.Tooltip(
+                    "Only includes writers with at least 5 watched movies",
+                    target="tooltip-target5"),    
                 dcc.Graph(id='favorite-writers-graph',
                       figure = generate_favorite_writers(),
                       style={'height':380},
                       config= {'displaylogo': False}),
             ], width={'size': 3, 'offset': 0, 'order': 3}),  # width third column on fifth row          
             dbc.Col([  # fourth column on fifth row
-                html.H4('Favorite production companies', className='text-center'),
+                html.H4('Favorite production companies', className='text-center', id='tooltip-target6'),
+                dbc.Tooltip(
+                    "Only includes productio companies with at least 15 watched movies",
+                    target="tooltip-target6"),    
                 dcc.Graph(id='favorite-pcomps-graph',
                       figure = generate_favorite_pcomps(),
                       style={'height':380},

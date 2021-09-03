@@ -18,7 +18,7 @@ To install all of the required packages, simply run:
 pip install -r requirements.txt
 ```
 
-and all of the required `pip` packages, will be installed, so that the app is able to run.
+and all of the required `pip` packages will be installed, so that the app is able to run.
 
 ## How to use this app
 

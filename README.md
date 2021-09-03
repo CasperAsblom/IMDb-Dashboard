@@ -8,7 +8,7 @@ I am a huge movie fan, and was very disappointed in the user ratings analysis pr
 
 
 ## Built With
-* [Dash](https://dash.plot.ly/) - Main server and interactive components 
+* [Dash](https://dash.plot.ly/) - Main server and layout
 * [Plotly Python](https://plot.ly/python/) - Used to create the interactive plots
 
 ## Requirements

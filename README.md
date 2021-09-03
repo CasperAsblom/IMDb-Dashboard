@@ -12,7 +12,7 @@ I am a huge movie fan, and was very disappointed in the user ratings analysis pr
 * [Plotly Python](https://plot.ly/python/) - Used to create the interactive plots
 
 ## Requirements
-To install all of the required packages to this environment, simply run:
+To install all of the required packages, simply run:
 
 ```
 pip install -r requirements.txt
